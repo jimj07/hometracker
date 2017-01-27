@@ -2,7 +2,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const ERROR_MSG = require('./errormsg');
 const hometracker = require('./hometracker');
+const port = process.env.PORT || 3000;
 const app = express();
+
 
 app.use(bodyParser.json());
 
@@ -20,5 +22,7 @@ app.post('/', function (req, res) {
    }
 })
 
-app.listen(443);
+app.listen(port, () => {
+   console.log(`Hometracker is listening on port ${port}`);
+});
 module.exports = app;
