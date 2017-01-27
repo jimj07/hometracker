@@ -9,16 +9,23 @@ const app = express();
 app.use(bodyParser.json());
 
 app.post('/', function (req, res) {
+   console.log("received a request");
    if (!req.body || !hometracker.isValid(req.body)) {
+      console.log("Invalid request");
       res.status(400)
          .json({
             "error": ERROR_MSG.FAILED_TO_PARSE
          });
    } else {
-      let result = hometracker.findCompletedHTV(req.body);
-      res.json({
-         "response": result
-      });
+      console.log(req.body);
+      console.log("findCompletedHTV");
+      hometracker.findCompletedHTV(req.body)
+         .then((result) => {
+            console.log(result);
+            res.json({
+               "response": result
+            });
+         })
    }
 })
 
