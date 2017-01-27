@@ -1,6 +1,8 @@
 const _ = require('lodash');
 const traverse = require('traverse');
 const ERROR_MSG = require('./errormsg');
+
+// Only checks the fields needed for building response data
 const schema = {
    "workflow": true,
    "type": true,
