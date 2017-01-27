@@ -53,7 +53,10 @@ module.exports.findCompletedHTV = findCompletedHTV;
 // check if entity contains all the properties specify in schema
 function validateEntity(data, schema) {
    let valid = true;
+
+   // get every possible non-cyclic path in the object
    let paths = traverse(schema).paths();
+
    for (let path of paths) {
       // check if data has value in each path
       if (!_.isEmpty(path) && _.get(data, path) === undefined) {
