@@ -21,6 +21,7 @@ app.post('/', function (req, res) {
          });
       })
       .catch(() => {
+         console.log('Invalid request');
          res.status(400)
             .json({
                "error": ERROR_MSG.FAILED_TO_PARSE
