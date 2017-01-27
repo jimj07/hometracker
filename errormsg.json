@@ -1,0 +1,4 @@
+{
+   "INVALID_DATA": "Data is invalid.",
+   "FAILED_TO_PARSE": "Could not decode request: JSON parsing failed"
+}

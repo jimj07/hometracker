@@ -1,0 +1,14 @@
+{
+    "response": [
+        {
+            "concataddress": "Level 6 146 Arthur Street North Sydney NSW 2060",
+            "type": "htv",
+            "workflow": "completed"
+        },
+        {
+            "concataddress": "360 Elizabeth St Melbourne VIC 3000",
+            "type": "htv",
+            "workflow": "completed"
+        }
+    ]
+}
