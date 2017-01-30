@@ -58,7 +58,7 @@ describe('Hometracker Tests', () => {
          })
          expect(actual).to.be.false;
       });
-      
+
       it('should return true if all the entities in payload are valid', () => {
          let actual = hometracker.isValid({
             "payload": [
@@ -218,6 +218,146 @@ describe('Hometracker Tests', () => {
                   "type": "htv",
                   "workflow": "completed"
                },
+               {
+                  "concataddress": "Level 9 11 George Street Burwood NSW 2010",
+                  "type": "htv",
+                  "workflow": "completed"
+               }
+            ]);
+      });
+   });
+
+   describe('find', () => {
+      it('should return the same set of data if query is empty', () => {
+         let query = {};
+         let result = hometracker.find({
+            "payload": [
+               {
+                  "address": {
+                     "buildingNumber": "Level 6",
+                     "postcode": "2060",
+                     "state": "NSW",
+                     "street": "146 Arthur Street",
+                     "suburb": "North Sydney"
+                  },
+                  "type": "htv",
+                  "valfirm": null,
+                  "workflow": "completed"
+               },
+               {
+                  "address": {
+                     "buildingNumber": "Level 9",
+                     "postcode": "2010",
+                     "state": "NSW",
+                     "street": "11 George Street",
+                     "suburb": "Burwood"
+                  },
+                  "type": "htv",
+                  "valfirm": null,
+                  "workflow": "completed"
+               }
+            ]
+         }, query);
+
+         return expect(result).to.eventually
+            .deep.equal([
+               {
+                  "concataddress": "Level 6 146 Arthur Street North Sydney NSW 2060",
+                  "type": "htv",
+                  "workflow": "completed"
+               },
+               {
+                  "concataddress": "Level 9 11 George Street Burwood NSW 2010",
+                  "type": "htv",
+                  "workflow": "completed"
+               }
+            ]);
+      });
+
+      it('should return the data with workflow as completed and type as htv', () => {
+         let query = {
+            "type": "htv",
+            "workflow": "completed"
+         };
+
+         let result = hometracker.find({
+            "payload": [
+               {
+                  "address": {
+                     "buildingNumber": "Level 6",
+                     "postcode": "2060",
+                     "state": "NSW",
+                     "street": "146 Arthur Street",
+                     "suburb": "North Sydney"
+                  },
+                  "type": "htv",
+                  "valfirm": null,
+                  "workflow": "completed"
+               },
+               {
+                  "address": {
+                     "buildingNumber": "Level 9",
+                     "postcode": "2010",
+                     "state": "NSW",
+                     "street": "11 George Street",
+                     "suburb": "Burwood"
+                  },
+                  "type": "abc",
+                  "valfirm": null,
+                  "workflow": "completed"
+               }
+            ]
+         }, query);
+
+         return expect(result).to.eventually
+            .deep.equal([
+               {
+                  "concataddress": "Level 6 146 Arthur Street North Sydney NSW 2060",
+                  "type": "htv",
+                  "workflow": "completed"
+               }
+            ]);
+      });
+
+      it('should return the data with address.state as NSW and type as htv', () => {
+         let query = {
+            "address": {
+               "state": "NSW"
+            },
+            "workflow": "completed"
+         };
+
+         let result = hometracker.find({
+            "payload": [
+               {
+                  "address": {
+                     "buildingNumber": "Level 6",
+                     "postcode": "2060",
+                     "state": "ACT",
+                     "street": "146 Arthur Street",
+                     "suburb": "North Sydney"
+                  },
+                  "type": "htv",
+                  "valfirm": null,
+                  "workflow": "completed"
+               },
+               {
+                  "address": {
+                     "buildingNumber": "Level 9",
+                     "postcode": "2010",
+                     "state": "NSW",
+                     "street": "11 George Street",
+                     "suburb": "Burwood"
+                  },
+                  "type": "htv",
+                  "valfirm": null,
+                  "workflow": "completed"
+               }
+            ]
+         }, query);
+
+         return expect(result).to.eventually
+            .deep.equal([
                {
                   "concataddress": "Level 9 11 George Street Burwood NSW 2010",
                   "type": "htv",

@@ -28,23 +28,34 @@ function isValid(data) {
 
 // find all the entitties with type as htv and workflow as completed
 function findCompletedHTV(data) {
+   let query = {
+      "type": "htv",
+      "workflow": "completed"
+   };
+   return find(data, query);
+};
+
+// find all the entities that partilly deep equal to (contains) query object
+function find(data, query) {
    return new Promise((resolve, reject) => {
       if (!isValid(data)) {
          reject(ERROR_MSG.INVALID_DATA);
+      } else {
+         let payload = data.payload;
+         let result = payload.reduce((res, cur) => {
+            if (_.isMatch(cur, query)) {
+               res.push(createOuput(cur));
+            }
+            return res;
+         }, []);
+         resolve(result);
       }
-      let payload = data.payload;
-      let result = payload.reduce((res, cur) => {
-         if (cur.type === 'htv' && cur.workflow === 'completed') {
-            res.push(createOuput(cur));
-         }
-         return res;
-      }, []);
-      resolve(result);
    })
-};
+}
 
 module.exports.isValid = isValid;
 module.exports.findCompletedHTV = findCompletedHTV;
+module.exports.find = find;
 
 // ************************************************************ //
 //                     Private Functions                        //
